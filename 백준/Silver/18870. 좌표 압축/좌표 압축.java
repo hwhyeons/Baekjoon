@@ -2,48 +2,16 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class Node {
-    static int nextIndexOrigin = 0;
-    static int nextIndexSorted = 0;
-    static int beforeNumber = Integer.MIN_VALUE;
-    static int beforeSameCount = 0;
-    int val;
-    int indexOrigin;
-    int answer;
-    public static Node makeNode(int val){
-        Node n = new Node();
-        n.val = val;
-        n.indexOrigin = nextIndexOrigin;
-        ++nextIndexOrigin;
-        return n;
-    }
-
-    public void setAnswer() {
-        if (beforeNumber == this.val) {
-            this.answer = nextIndexSorted-(++beforeSameCount);
-        } else {
-            this.answer = nextIndexSorted-beforeSameCount;
-            beforeNumber = this.val;
-        }
-        ++nextIndexSorted;
-    }
-
-    public int getIndexOrigin(){
-        return this.indexOrigin;
-    }
-
-    public int getVal(){
-        return this.val;
-    }
-}
 public class Main {
+    static int sum = 0;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         final int COUNT = Integer.parseInt(br.readLine());
-        String answer = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt)
-                        .mapToObj(Node::makeNode).sorted(Comparator.comparing(Node::getVal))
-                .peek(Node::setAnswer).sorted(Comparator.comparing(Node::getIndexOrigin))
-                .map(node->String.valueOf(node.answer)).collect(Collectors.joining(" "));
-        System.out.println(answer);
+        StringBuilder sb = new StringBuilder();
+        int[] arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray(); // String 타입
+        HashSet<Integer> set = (HashSet<Integer>)Arrays.stream(arr).boxed().collect(Collectors.toSet());
+        HashMap<Integer,Integer> map = (HashMap<Integer,Integer>)set.stream().sorted().collect(Collectors.toMap(Integer::intValue,(val)->sum++));
+        Arrays.stream(arr).forEach(i->sb.append(map.get(i)+" "));
+        System.out.println(sb.substring(0,sb.length()-1));
     }
 }
