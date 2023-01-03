@@ -16,17 +16,22 @@ public class Main {
         width = Integer.parseInt(stk.nextToken());
         height = Integer.parseInt(stk.nextToken());
         wallArray = new Wall[height][width];
+
         for (int i = 0; i < height; i++) { // i = y좌표
             stk = new StringTokenizer(br.readLine());
             int j = 0; // j는 x좌표
             while (stk.hasMoreTokens()) {
                 int n = Integer.parseInt(stk.nextToken());
-                String hex = Integer.toBinaryString(n);
                 Wall w = new Wall();
-                if (hex.length() == 4) w.down = true; // 납
-                if (hex.length() >= 3 && hex.charAt(hex.length() - 3) == '1') w.right = true; // 동
-                if (hex.length() >= 2 && hex.charAt(hex.length() - 2) == '1') w.up = true;
-                if (hex.length() >= 1 && hex.charAt(hex.length() - 1) == '1') w.left = true;
+                int bit = 1;
+                if ((n&bit) != 0) w.left = true;
+                if ((n&(bit<<1)) != 0) w.up = true;
+                if ((n&(bit<<2)) != 0) w.right = true;
+                if ((n&(bit<<3)) != 0) w.down = true;
+//                if (hex.length() == 4) w.down = true; // 납
+//                if (hex.length() >= 3 && hex.charAt(hex.length() - 3) == '1') w.right = true; // 동
+//                if (hex.length() >= 2 && hex.charAt(hex.length() - 2) == '1') w.up = true;
+//                if (hex.length() >= 1 && hex.charAt(hex.length() - 1) == '1') w.left = true;
                 wallArray[i][j] = w;
                 ++j;
             }
@@ -101,7 +106,7 @@ public class Main {
         System.out.println(maxWithRemove);
     }
 
-    private static void clearVisited(){ // 방문 초기화
+    private static void clearVisited() { // 방문 초기화
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 wallArray[i][j].isVisited = false;
