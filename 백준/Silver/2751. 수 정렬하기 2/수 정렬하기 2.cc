@@ -1,25 +1,28 @@
-#define _CRT_SECURE_NO_WARNINGS
-
-#include <string>
 #include <iostream>
-#include <stack>
-#include <set>
-
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <deque>
 
 using namespace std;
 
-
 int main() {
-	ios::sync_with_stdio(false); cin.tie(NULL);
-	
-	set<int,less<int>> s;
-	int n, t;
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	int n,t;
 	cin >> n;
-	for (int i = 0; i < n; i++) {
+	int* arr = new int[n];
+	for (int i =0; i<n; i++) {
 		cin >> t;
-		s.insert(t);
+		arr[i] = t;
 	}
-	for (auto i = s.begin(); i != s.end(); i++) {
-		cout << *i << "\n";
+	sort(arr,arr+n);
+	for (int i =0; i<n; i++) {
+		cout << arr[i] << "\n";
 	}
 }
+
+
+
+
+
