@@ -21,15 +21,15 @@ int main() {
 	int n;
 	string t;
 	cin >> n;
-	vector<string> v(n);
+	string* v = new string[n];
 	for (int i = 0; i < n;i++) {
 		cin >> t;
 		v[i] = t;
 	}
-	sort(v.begin(), v.end(),compare);
-	auto u = unique(v.begin(), v.end());
-	if (u != v.begin()) v.erase(u,v.end());
-	for (int i = 0; i < v.size(); i++) {
+	sort(v, v+n,compare);
+	string* u_ptr = unique(v, v+n);
+	for (int i = 0; i < n; i++) {
+		if (u_ptr == &v[i]) break;
 		cout << v[i] << "\n";
 	}
 }
