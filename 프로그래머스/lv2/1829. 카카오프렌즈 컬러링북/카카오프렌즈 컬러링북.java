@@ -1,27 +1,26 @@
 
 import java.util.*;
 
-
 class Solution {
     boolean[][] v;
 
-    int[] dx= {0,0,-1,1};
-    int[] dy= {-1,1,0,0};
+    double rot = Math.PI/2;
 
-    private int go(int[][] arr, int y, int x) {
+
+
+    private int go(int[][] arr, int y, int x, int bfColor) {
+        if (y < 0 || x <0 || y>=arr.length || x >= arr[0].length || v[y][x]) return 0;
         int color = arr[y][x];
+        if (bfColor != color || color == 0) return 0;
         v[y][x] = true;
-        if (color == 0) return 0;
         int sum = 1; // 현재 영역 크기
-        int nx,ny;
-        for (int i = 0; i < 4; i++) {
-            nx = x+dx[i];
-            ny = y+dy[i];
-            if (nx < 0 || ny <0 || ny>=arr.length || nx >= arr[0].length) continue;
-            if (v[ny][nx]) continue;
-            if (arr[ny][nx] == color) {
-                sum += go(arr,ny,nx);
-            }
+        int lx = 1; // 우
+        int ly = 0; // 우
+        for (double deg = 0; deg<2*Math.PI; deg+=rot) {
+            int newX = (int)(lx*Math.cos(deg) - ly*Math.sin(deg));
+            int newY = (int)(lx*Math.sin(deg) + ly*Math.cos(deg));
+            sum += go(arr,y+newY,x+newX,bfColor);
+            lx = newX; ly = newY;
         }
         return sum;
     }
@@ -33,10 +32,12 @@ class Solution {
         v = new boolean[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (v[i][j]) continue;
-                int tmp = go(picture,i,j);
-                if (tmp > 0) numberOfArea++;
-                maxSizeOfOneArea = Math.max(maxSizeOfOneArea,tmp);
+                int color = picture[i][j];
+                int tmp = go(picture,i,j,color);
+                if (tmp > 0) {
+                    numberOfArea++;
+                }
+                if (color !=0 ) maxSizeOfOneArea = Math.max(maxSizeOfOneArea,tmp);
             }
         }
 
