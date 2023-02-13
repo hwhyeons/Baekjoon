@@ -1,50 +1,45 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
-#include <string.h>
-#include <sstream>
-#include <stdio.h>
-#include <cstdlib>
+#include <vector>
 #include <numeric>
+
 
 using namespace std;
 
-bool finish = false;
-
-void go(int ar[], int out[],int depth, int idx) {
-	if (finish || idx >= 9) return;
-	out[depth] = ar[idx];
-	if (depth == 6) {
-		int sum = accumulate(out,out+7,0);
-		if (sum != 100) return;
-		for (int i=0;i<7;i++) {
-			printf("%d\n",out[i]);	
-		}
-		finish = true;
-		return;
-	}
-	
-	for (int i=idx+1;i<9;i++) {
-		go(ar,out,depth+1,i);
-	}
-}
+vector<int> v(9);
+vector<int> idx(9);
 
 int main() {
-	int arr[9];
-	for (int i=0;i<9;i++) {
-		scanf("%d",&arr[i]);	
-	}
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
 	
-	sort(arr,arr+9);
-	int out[7];
-	for (int i =0;i<9;i++) {
-		go(arr,out,0,i);
+	for (int i = 0; i < 9; i++){
+		cin >> v[i];
 	}
-	return 0;
+	for (int i = 0; i<7; i++)
+	{
+		idx[i] = 1;
+	}
+
+	sort(v.begin(),v.end());
+	do
+	{
+		int sum = 0;
+		for (int i = 0; i < 9; i++) {
+			sum += idx[i] == 1 ? v[i] : 0;
+		}
+		if (sum == 100) {
+			for (int i = 0; i < 9; i++) {
+				if (idx[i] == 1) {
+					cout << v[i] << "\n";
+				}
+			}
+			return 0;
+		}
+	} while (prev_permutation(idx.begin(),idx.end()));
+	
+	
 }
-
-
-
-//%d
 
 
