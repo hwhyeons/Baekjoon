@@ -1,32 +1,55 @@
-#define _CRT_SECURE_NO_WARNINGS
-
-#include <string>
 #include <iostream>
-#include <set>
-#include <queue>
 #include <algorithm>
+#include <string>
+#include <cstring>
+#include <sstream>
+#include <vector>
+#include <numeric>
 #include <deque>
+#include <stack>
 #include <unordered_set>
 
 using namespace std;
 
 
 int main() {
-	ios::sync_with_stdio(false); cin.tie(NULL);
-	unordered_set<int> s;
-	int n,t;
-	cin >> n;
-	for (int i = 0;i < n;i++) {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	
+	int a,b,t;
+	vector<int> v;
+	cin >> a;
+	for (int i =0; i<a; i++) {
 		cin >> t;
-		s.insert(t);
+		v.push_back(t);
 	}
+	sort(v.begin(),v.end());
+	
 
-	cin >> n;
-	for (int i = 0;i < n;i++) {
+	
+	cin >> b;
+	for (int i =0; i<b; i++) {
 		cin >> t;
-		if (s.find(t) != s.end()) cout << "1\n";
-		else cout << "0\n";
+		int s =0,e=v.size()-1,m;
+		bool ok = false;
+		while (s<=e) {
+			m = (s+e)/2;
+			if (v[m] == t) {
+				ok = true;
+				break;
+			}
+			if (v[m] < t) {
+				s = m+1;
+			} else {
+				e = m - 1;
+			}
+		}
+		if (ok) {
+			cout << "1\n";
+		} else {
+			cout << "0\n";
+		}
 	}
-
-
 }
+
+
