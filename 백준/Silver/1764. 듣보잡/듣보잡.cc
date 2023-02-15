@@ -4,7 +4,7 @@
 #include <vector>
 #include <numeric>
 #include <deque>
-#include <set>
+#include <unordered_set>
 
 using namespace std;
 
@@ -15,7 +15,7 @@ int main() {
 	int n,k;
 	string t;
 	cin >> n >> k;
-	set<string> s;
+	unordered_set<string> s;
 	for (int i =0;i<n;i++) {
 		cin >> t;
 		s.insert(t);
