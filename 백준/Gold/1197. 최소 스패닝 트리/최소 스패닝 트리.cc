@@ -19,7 +19,6 @@ vector<edge> v;
 vector<int> parent;
 
 
-
 int find(int node) {
 	if (parent[node] == node) {
 		return node;
@@ -31,16 +30,7 @@ int find(int node) {
 void union_node (int n1, int n2){
 	int p1 = find(n1);
 	int p2 = find(n2);
-	if (p1 == p2) {
-		return;
-	} else {
-		if (p1 > p2) {
-			parent[p1] = p2;
-		} else {
-			parent[p2] = p1;
-		}
-		return;
-	}
+	parent[max(p1,p2)] = parent[min(p1,p2)];
 }
 
 
