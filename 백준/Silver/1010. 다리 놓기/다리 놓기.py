@@ -1,3 +1,4 @@
+import sys
 
 def f(n):
     ans = 1
@@ -5,9 +6,13 @@ def f(n):
         ans *= i
     return ans
 
-t = int(input())
+t = int(sys.stdin.readline().split()[0])
 for i in range(t):
-    s = input().split(" ")
+    s = sys.stdin.readline().split()
     r = int(s[0])
     n = int(s[1])
     print(f(n)//(f(r)*f(n-r)))
+
+    
+    
+    
