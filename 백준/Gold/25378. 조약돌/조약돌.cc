@@ -31,7 +31,6 @@ int main()
         for (int j = i+1; j <= n; ++j) {
             int gap = abs(v[j] - before);
             if (gap == 0) is_best[i][j] = 1;
-            else is_best[i][j] = 0;
             before = gap;
         }
     }
@@ -39,7 +38,7 @@ int main()
     vector<int> dp(n+1);
     dp[1] = 1; // 첫번째 원소만 봤을 때 가장 최선의 방법은 한가지
     dp[2] = is_best[1][2] == 1 ? 1 : 2; // 1~2번째 원소만 봤을 때 최소는, 1~2번째를 한번에 집을 수 있으면 1번, 그게 아니면 2번
-    for (int idx = 3; idx <= n; ++idx) {
+    for (int idx = 2; idx <= n; ++idx) {
         int mn1 = dp[idx-1]+1; // idx-1번 까지 최소로 뽑고, idx번째는 조약돌 한번에 뽑기 (문제에서는 작업2)
         int mn2 = INT_MAX;
         for (int i = 1; i < idx; ++i) {
