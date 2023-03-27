@@ -57,12 +57,6 @@ int main()
         start.insert(t);
     }
 
-    if (start.empty()) {
-        cout << m;
-        return 0;
-    }
-
-
     for (int i = 1; i <= m; ++i) {
         int tmp; cin >> tmp;
 //        vector<int> num;
@@ -78,6 +72,7 @@ int main()
                 all[k].f.insert(k2);
             }
         }
+
     }
 
 
