@@ -17,7 +17,7 @@ void dik(vector<vector<ll>>& dist,int start, int end) {
 
         // 갱신
         for (int i = 1; i < dist.size(); ++i) {
-            if (cur_val + dist[cur_idx][i] < mins[i] && !visit[i]) {
+            if (cur_val + dist[cur_idx][i] < mins[i]) {
                 mins[i] = cur_val + dist[cur_idx][i];
                 before_node_idx[i] = cur_idx;
             }
