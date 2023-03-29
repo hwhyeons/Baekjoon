@@ -15,16 +15,17 @@ int main()
     int t_cnt; cin>>t_cnt;
     while (t_cnt--) {
         int n; cin >> n;
-        unordered_set<int> s1;
+        vector<int> v1;
         for (int i = 0; i < n; ++i) {
             int tmp;
             cin >> tmp;
-            s1.insert(tmp);
+            v1.emplace_back(tmp);
         }
+        ranges::sort(v1);
         int m; cin >> m;
         for (int i = 0; i < m; ++i) {
             int t; cin>>t;
-            if (s1.contains(t)) {
+            if (binary_search(v1.begin(),v1.end(),t)) {
                 cout << 1 << "\n";
             } else {
                 cout << 0 << "\n";
