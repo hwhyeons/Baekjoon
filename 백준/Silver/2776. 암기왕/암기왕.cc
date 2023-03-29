@@ -25,7 +25,7 @@ int main()
         int m; cin >> m;
         for (int i = 0; i < m; ++i) {
             int t; cin>>t;
-            if (binary_search(v1.begin(),v1.end(),t)) {
+            if (ranges::binary_search(v1,t)) {
                 cout << 1 << "\n";
             } else {
                 cout << 0 << "\n";
