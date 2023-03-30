@@ -1,16 +1,16 @@
-#include <iostream>
-#include <string>
-#include <sstream>
+#include <bits/stdc++.h>
+#include <ranges>
+
+#define ll long long
 
 using namespace std;
 
-int main()
-{
-    double A, B;
-    cin >> A;
-    cin >> B;
-    cout << fixed;
-    cout.precision(9);
-    cout << A / B;
-    return 0;
+
+
+int main() {
+    ios_base::sync_with_stdio(false); cin.tie(nullptr);
+    double a,b;
+    scanf("%lf %lf",&a,&b);
+    printf("%.9lf",a/b);
 }
+
