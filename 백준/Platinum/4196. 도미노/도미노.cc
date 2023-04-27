@@ -119,41 +119,21 @@ int main() {
 
         // 안으로 들어오는 화살표가 없는 경우
         int answer = 0;
-        // scc에 속한 모든 노드에서 안쪽 화살표가 있는지 확인 -> 모든 parent.size()가 0인 경우 >> 시간 초과
-        // 모든 노드별로 체크하는 방식으로
-        vector<int> indegrees(all_scc.size());
-        for (int i = 1; i <= n; ++i) {
-            auto& frs = nodes.at(i).fr;
-            for (int fridx : frs) {
-                if (scc_number.at(fridx) != scc_number.at(i)) {
-                    indegrees.at(scc_number.at(fridx))+=1;
+        for (auto &scc: all_scc) {
+            // scc에 속한 모든 노드에서 안쪽 화살표가 있는지 확인 -> 모든 parent.size()가 0인 경우
+            for (int idx : scc) {
+                auto& prs = nodes.at(idx).pr;
+                for (int pridx : prs) {
+                    if (scc_number[pridx] == scc_number[idx]) continue;
+                    else { // 그룹 다른게 하나라도 있는 경우 정답이 될 수 없음
+                        goto out;
+                    }
                 }
             }
-        }
-        for (int i = 0; i <indegrees.size(); ++i) {
-            if (indegrees.at(i) == 0) {
-                answer++;
-            }
+            answer++;
+            out:
+            continue;
         }
         cout << answer << "\n";
-//            bool is_indegree_zero_scc = all_of(scc.begin(), scc.end(),[nodes](auto idx){
-//                if (nodes.at(idx).pr.empty()) {
-//                    return true;
-//                } else return false;
-//            });
-//            if (is_indegree_zero_scc) answer++;
-//        }
-//        // 모든 강한 결합 요소 도미노를 넘어뜨리면 연결된 모든 요소들도
-//        vector<bool> all_vst(n+1,false);
-//        vector<bool> vst2(n+1,false);
-//        int answer = 0;
-//        for (int i = 1; i <= n; ++i) {
-//            int push = i; // 넘어뜨릴 번호
-//            if (all_vst.at(push) || vst2.at(push)) continue; // 이미 넘어뜨린경우
-//            answer++;
-//            // 모든 부모 노드에서 단방향 전파
-//            dfs2(nodes,all_vst,vst2,scc_number,push);
-//        }
-//        cout << answer << "\n";
     }
 }
