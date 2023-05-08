@@ -5,6 +5,7 @@ typedef long long ll;
 using namespace std;
 
 int main() {
+    cin.tie(0);
     ranges::for_each(ranges::istream_view<string>(cin) | views::drop(1),[](auto s) {
         regex r("X+");
         auto it = sregex_token_iterator(s.begin(), s.end(), r, -1);
