@@ -15,6 +15,6 @@ int main() {
             acc += ((len) * (len + 1)) / 2;
             it++;
         }
-        *ostream_iterator<int>(cout, "\n")++ = acc;
+        cout << acc << "\n";
     });
 }
