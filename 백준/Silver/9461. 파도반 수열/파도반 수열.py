@@ -1,6 +1,6 @@
 import functools
 
-@functools.cache
+@functools.lru_cache
 def f(n):
     if n <= 3:
         return 1
