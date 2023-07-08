@@ -1,7 +1,6 @@
 from collections import defaultdict
 import sys
 input = sys.stdin.readline
-print = sys.stdout.write
 n = int(input().rstrip("\n"))
 
 d = defaultdict(lambda :[0,False])
