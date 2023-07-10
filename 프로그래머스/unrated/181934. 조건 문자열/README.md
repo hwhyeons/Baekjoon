@@ -1,10 +1,10 @@
 # [unrated] 조건 문자열 - 181934 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181934?language=c) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181934?language=python3) 
 
 ### 성능 요약
 
-메모리: 4.21 MB, 시간: 0.01 ms
+메모리: 10.2 MB, 시간: 0.03 ms
 
 ### 구분
 
