@@ -1,0 +1,1 @@
+print(sum([(ord(v)-64)*26**(i) for i,v in enumerate(input()[::-1])]))
