@@ -1,3 +1,2 @@
-from datetime import date
-a,b=map(int,input().split())
-print(['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'][date(2009,b,a).weekday()])
+import datetime
+print(['Mon','Tues','Wednes','Thurs','Fri','Satur','Sun'][datetime.date(2009,*reversed(list(map(int,input().split())))).weekday()]+"day")
