@@ -1,1 +1,2 @@
-print("".join(map(lambda x: x[0] if len(set(x)) == 1 else "?", map(list,zip(*[input() for _ in range(int(input()))])))))
+s=[*open(0)]
+print(*map(lambda x:["?",x[0]][len({*x})<2],zip(*s[1:])),sep="")
