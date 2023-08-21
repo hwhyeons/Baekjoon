@@ -1,18 +1,9 @@
-import sys
-input = sys.stdin.readline
-
-d={}
+d={1:1}
 def f(n):
-    if n==1:
-        return 1
     if n in d:
         return d[n]
-    mx = n
-    n = n*3+1 if n%2 else n//2
-    mx = max(mx,f(n))
-    return mx
+    d[n] = max(n,f(n*3+1 if n%2 else n//2))
+    return d[n]
 
-t = int(input().rstrip())
-for _ in range(t):
-    n=int(input().rstrip())
-    print(f(n))
+v = map(int,open(0).read().split()[1:])
+[print(f(i)) for i in v]
