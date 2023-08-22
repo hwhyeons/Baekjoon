@@ -1,6 +1,5 @@
 v=open(0).read().split()
-n= int(v[0])
-c={*v[1:n+1]}
+c={*v[1:(n:=int(v[0]))+1]}
 for i in range(n+1):
     if v[i] == '?':
         f=v[i-1][-1] if i>1 else 0
