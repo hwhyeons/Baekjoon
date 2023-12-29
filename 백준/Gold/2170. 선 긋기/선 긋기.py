@@ -1,12 +1,10 @@
-n= int(input())
-v=sorted([tuple(map(int, input().split())) for _ in range(n)])
-acc=(b:=v[0][1])-v[0][0]
+v=sorted([tuple(map(int, input().split())) for _ in range(int(input()))])
+c= (b:=v[0][1]) - v[0][0]
 for p in v:
     s,e=p
+    c+= max(e-b,0) if s<b else e-s
     if s<b:
-        acc += e-b if e>b else 0
         b=max(b,e)
     else:
-        acc+=e-s
         b=e
-print(acc)
+print(c)
