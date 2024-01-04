@@ -1,3 +1,2 @@
 import itertools as e
-a,b=eval("map(int,input().split()),"*2)
-print(sum([*e.accumulate(sorted(b))]))
+print(sum([*e.accumulate(sorted(map(int,[*open(0)][1].split())))]))
