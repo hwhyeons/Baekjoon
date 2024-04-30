@@ -1,3 +1,4 @@
+import itertools
 
 n = int(input())
 v = []
@@ -13,7 +14,6 @@ def convert2yx(index: int) -> tuple[int,int]:
     y = index//n
     x = index%n
     return y,x
-
 
 
 def is_already_on(y,x) -> bool:
@@ -62,31 +62,22 @@ def calculate() -> bool:
     return True
 
 
+comb = itertools.combinations(range(n*n),3)
 
-
-for i in range(n*n):
-    y1,x1 = convert2yx(i)
-    if is_already_on(y1, x1):
+while (t:=next(comb,None)):
+    y1,x1 = convert2yx(t[0])
+    y2,x2 = convert2yx(t[1])
+    y3,x3 = convert2yx(t[2])
+    if is_already_on(y1,x1) or is_already_on(y2,x2) or is_already_on(y3,x3):
         continue
-    before_1 = v[y1][x1]
     v[y1][x1] = 'O'
-    for j in range(i+1,n*n):
-        y2, x2 = convert2yx(j)
-        if is_already_on(y2,x2):
-            continue
-        before_2 = v[y2][x2]
-        v[y2][x2] = 'O'
-        for k in range(j+1,n*n):
-            y3, x3 = convert2yx(k)
-            if is_already_on(y3, x3):
-                continue
-            before_3 = v[y3][x3]
-            v[y3][x3] = 'O'
-            success = calculate()
-            if success:
-                print("YES")
-                exit(0)
-            v[y3][x3] = before_3
-        v[y2][x2] = before_2
-    v[y1][x1] = before_1
+    v[y2][x2] = 'O'
+    v[y3][x3] = 'O'
+    if calculate():
+        print("YES")
+        exit(0)
+    v[y1][x1] = 'X'
+    v[y2][x2] = 'X'
+    v[y3][x3] = 'X'
 print("NO")
+
