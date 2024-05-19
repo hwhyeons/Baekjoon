@@ -1,44 +1,53 @@
 N = int(input())
-v = list(map(int, input().split()))
 if N == 1:
     print("A")
     exit(0)
-elif N == 2 and v[0] == v[1]:
+
+v = list(map(int, input().split()))
+if N == 2 and v[0] == v[1]:
     print(v[0])
     exit(0)
 elif N == 2:
     print("A")
     exit(0)
 
-# 4
-# 1 4 13 40
-# 1a+b=4(v[1])
-# 4a+b=13(v[2]
+assert v.__len__() >=1
 
-const = v[2]-v[1] # 27
-coef = v[1]-v[0] # 9
-if coef == 0:  # 3 3 3같은 경우
-    if len(set(v)) == 1:
-        print(v[0])
+
+answer:set[int] = set()
+
+def dfs(index: int, a: int, b: int,before: int):
+    global v
+    assert len(v) >= 1
+    if index == 0:
+        new_before = v[0]
     else:
-        print("B")
-    exit(0)
+        # 되는지 점검
+        if a*before+b != v[index]:
+            return
+        new_before =a*before+b
 
-if const%coef != 0: # 나누어떨어지지 않는 경우
+    # 마지막인덱스까지 왔는데 되는 경우
+    if index == N-1:
+        answer.add(a*new_before+b)
+        return
+
+    dfs(index+1,a,b,new_before)
+
+    # for i in range(a+1,101):
+    #     for j in range(b+1,101):
+    #         dfs(index+1,i,j,new_before)
+    pass
+
+for i in range(-100000,100001):
+    a = i
+    b = v[1] - a*v[0]
+    dfs(0,a,b,0)
+
+if not answer:
     print("B")
-    exit(0)
-
-a = const//coef # a값 고정
-b = v[1]-v[0]*a
-
-# 점검
-for i in range(N-1):
-    if v[i+1] == a*v[i]+b:
-        continue
-    else:
-        print("B")
-        exit(0)
-
-print(v[-1]*a+b)
-
-
+elif len(answer) >= 2:
+    print("A")
+else:
+    assert len(answer) == 1
+    print(list(answer)[0])
