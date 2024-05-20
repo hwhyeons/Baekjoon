@@ -18,7 +18,9 @@ class Int(int):
     def __add__(self, o):
         return Int(self.val+o.val)
     def __sub__(self, o):
-        return Int(int.__sub__(self.val, o.val))
+        return Int(self.val-o.val)
+    def __mul__(self, o):
+        return Int(self.val*o.val)
     def __invert__(self):
         return Int(1 if self.val == 0 else 0)
     def __neg__(self):
@@ -27,28 +29,10 @@ class Int(int):
         return Int(0) if (o.val == 0 or self.val == 0) else Int(1)
     def __or__(self, o):
         return Int(1) if (o.val != 0 or self.val != 0) else Int(0)
-    def __truediv__(self, o):
-        return Int(int.__truediv__(self.val, o.val))
     def __floordiv__(self, o):
-        return Int(int.__floordiv__(self.val, o.val))
+        return Int(self.val//o.val)
     def __mod__(self, o):
-        return Int(int.__mod__(self.val, o.val))
-    def __mul__(self, o):
-        return Int(int.__mul__(self.val, o.val))
-    def __radd__(self, o):
-        return Int(int.__radd__(self.val, o.val))
-    def __rsub__(self, o):
-        return Int(int.__rsub__(self.val, o.val))
-    def __rand__(self, o):
-        return Int(0) if (o.val == 0 or self.val == 0) else Int(1)
-    def __ror__(self, o):
-        return Int(1) if (o.val != 0 or self.val != 0) else Int(0)
-    def __rmod__(self, o):
-        return Int(int.__rmod__(self.val, o.val))
-    def __rmul__(self, o):
-        return Int(int.__rmul__(self.val, o.val))
-    def __rfloordiv__(self, o):
-        return Int(int.__rfloordiv__(self.val, o.val))
+        return Int(self.val%o.val)
 for ch in 'abcdefghijklmnopqrstuvwxyz':
     exec(f"{ch}=Int(0)")
 """
