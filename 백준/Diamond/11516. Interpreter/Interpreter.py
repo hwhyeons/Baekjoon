@@ -1,23 +1,7 @@
 import re
-
-
-# PATTERN =  r'!\s*(\d+)'
-# def replace_not_number(match):
-#     number = match.group(1)
-#     return f'int(not {number})'
-    # if number == '0':
-    #     return '1'
-    # else:
-    #     return '0'
-
-
-# Define the pattern to match numbers
 pattern_custom_int = r'\b\d+\b'
-
 def to_custom_int(match):
-    number = match.group(0)
-    return f'Int({number})'
-
+    return f'Int({match.group(0)})'
 
 class Expression:
 
@@ -254,5 +238,4 @@ while True:
     for _ in range(n):
         strip_line: str = input().strip()
         cp.parse_next_line(strip_line)
-    cp.code_str = cp.code_str.replace("True","1").replace("False","0")
     exec(cp.code_str)
