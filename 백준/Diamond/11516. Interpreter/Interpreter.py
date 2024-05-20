@@ -13,132 +13,51 @@ class CodeParser:
         self.deep = 0
         self.code_str = """\n
 class Int(int):
-    def __init__(self,value: int):
-        self.value = value
+    def __init__(self,val: int):
+        self.val = val
+    def __add__(self, o):
+        return Int(int.__add__(self.val, o.val))
+    def __sub__(self, o):
+        return Int(int.__sub__(self.val, o.val))
     def __invert__(self):
-        return Int(1 if self.value == 0 else 0)
+        return Int(1 if self.val == 0 else 0)
     def __neg__(self):
-        return Int(int.__neg__(self.value))
-    def __add__(self, other):
-        return Int(int.__add__(self.value, other.value))
-    def __sub__(self, other):
-        return Int(int.__sub__(self.value, other.value))
-    def __and__(self, other):
-        return Int(0) if (other.value == 0 or self.value == 0) else Int(1)
-    def __or__(self, other):
-        return Int(1) if (other.value != 0 or self.value != 0) else Int(0)
-    def __eq__(self, other):
-        return Int(int.__eq__(self.value, other.value))
-    def __ne__(self, other):
-        return Int(int.__ne__(self.value, other.value))
-    def __lt__(self, other):
-        return Int(int.__lt__(self.value, other.value))
-    def __le__(self, other):
-        return Int(int.__le__(self.value, other.value))
-    def __gt__(self, other):
-        return Int(int.__gt__(self.value, other.value))
-    def __ge__(self, other):
-        return Int(int.__ge__(self.value, other.value))
-    def __xor__(self, other):
-        return Int(int.__xor__(self.value, other.value))
-    def __lshift__(self, other):
-        return Int(int.__lshift__(self.value, other.value))
-    def __rshift__(self, other):
-        return Int(int.__rshift__(self.value, other.value))
-    def __truediv__(self, other):
-        return Int(int.__truediv__(self.value, other.value))
-    def __floordiv__(self, other):
-        return Int(int.__floordiv__(self.value, other.value))
-    def __mod__(self, other):
-        return Int(int.__mod__(self.value, other.value))
-    def __mul__(self, other):
-        return Int(int.__mul__(self.value, other.value))
-    def __pow__(self, other):
-        return Int(int.__pow__(self.value, other.value))
-    def __radd__(self, other):
-        return Int(int.__radd__(self.value, other.value))
-    def __rsub__(self, other):
-        return Int(int.__rsub__(self.value, other.value))
-    def __rand__(self, other):
-        return Int(0) if (other.value == 0 or self.value == 0) else Int(1)
-    def __ror__(self, other):
-        return Int(1) if (other.value != 0 or self.value != 0) else Int(0)
-    def __rxor__(self, other):
-        return Int(int.__rxor__(self.value, other.value))
-    def __rshift__(self, other):
-        return Int(int.__rshift__(self.value, other.value))
-    def __rtruediv__(self, other):
-        return Int(int.__rtruediv__(self.value, other.value))
-    def __rfloordiv__(self, other):
-        return Int(int.__rfloordiv__(self.value, other.value))
-    def __rmod__(self, other):
-        return Int(int.__rmod__(self.value, other.value))
-    def __rmul__(self, other):
-        return Int(int.__rmul__(self.value, other.value))
-    def __rpow__(self, other):
-        return Int(int.__rpow__(self.value, other.value))
-    def __rshift__(self, other):
-        return Int(int.__rshift__(self.value, other.value))
-    def __rtruediv__(self, other):
-        return Int(int.__rtruediv__(self.value, other.value))
-    def __rfloordiv__(self, other):
-        return Int(int.__rfloordiv__(self.value, other.value))
-    def __abs__(self):
-        return Int(int.__abs__(self.value))
+        return Int(int.__neg__(self.val))
+    def __and__(self, o):
+        return Int(0) if (o.val == 0 or self.val == 0) else Int(1)
+    def __or__(self, o):
+        return Int(1) if (o.val != 0 or self.val != 0) else Int(0)
+    def __truediv__(self, o):
+        return Int(int.__truediv__(self.val, o.val))
+    def __floordiv__(self, o):
+        return Int(int.__floordiv__(self.val, o.val))
+    def __mod__(self, o):
+        return Int(int.__mod__(self.val, o.val))
+    def __mul__(self, o):
+        return Int(int.__mul__(self.val, o.val))
+    def __radd__(self, o):
+        return Int(int.__radd__(self.val, o.val))
+    def __rsub__(self, o):
+        return Int(int.__rsub__(self.val, o.val))
+    def __rand__(self, o):
+        return Int(0) if (o.val == 0 or self.val == 0) else Int(1)
+    def __ror__(self, o):
+        return Int(1) if (o.val != 0 or self.val != 0) else Int(0)
+    def __rmod__(self, o):
+        return Int(int.__rmod__(self.val, o.val))
+    def __rmul__(self, o):
+        return Int(int.__rmul__(self.val, o.val))
+    def __rfloordiv__(self, o):
+        return Int(int.__rfloordiv__(self.val, o.val))
     def __ceil__(self):
-        return Int(int.__ceil__(self.value))
+        return Int(int.__ceil__(self.val))
     def __floor__(self):
-        return Int(int.__floor__(self.value))
+        return Int(int.__floor__(self.val))
     def __round__(self):
-        return Int(int.__round__(self.value))
-    def __trunc__(self):
-        return Int(int.__trunc__(self.value))
-    def __index__(self):
-        return Int(int.__index__(self.value))
-
-a=Int(0)
-b=Int(0)
-c=Int(0)
-d=Int(0)
-e=Int(0)
-f=Int(0)
-g=Int(0)
-h=Int(0)
-i=Int(0)
-j=Int(0)
-k=Int(0)
-l=Int(0)
-m=Int(0)
-n=Int(0)
-o=Int(0)
-p=Int(0)
-q=Int(0)
-r=Int(0)
-s=Int(0)
-t=Int(0)
-u=Int(0)
-v=Int(0)
-w=Int(0)
-x=Int(0)
-y=Int(0)
-z=Int(0)
+        return Int(int.__round__(self.val))
+for ch in 'abcdefghijklmnopqrstuvwxyz':
+    exec(f"{ch}=Int(0)")
 """
-
-    def convert_print(self, line_strip: str):
-        expression_str: str = line_strip[5:].strip()
-        return f'print({to_python_expression(expression_str)})'
-
-    def convert_set(self, line_strip: str):
-        return f'{line_strip[3:].strip()[:line_strip[3:].strip().find("=")]} = {to_python_expression(line_strip[3:].strip()[line_strip[3:].strip().find("=") + 1:])}'
-
-    def convert_if(self, line: str):
-        s1 = line[2:].strip() # "n % 2 == 0"
-        expression_without_if = to_python_expression(s1)
-        full_str = f'if {expression_without_if}:'
-        return full_str
-
-    def add_space(self,line: str):
-        return ' '*4*self.deep+line
 
     def parse_next_line(self, line_strip: str) -> None:
         answer = ''
@@ -146,13 +65,13 @@ z=Int(0)
         remove_indent = False
         add_pass_line = False
         if line_strip.startswith("print"):
-            answer = self.convert_print(line_strip)
+            answer = f'print({to_python_expression(line_strip[5:].strip())})'
         elif line_strip.startswith("set"):
-            answer = self.convert_set(line_strip)
+            answer = f'{line_strip[3:].strip()[:line_strip[3:].strip().find("=")]} = {to_python_expression(line_strip[3:].strip()[line_strip[3:].strip().find("=") + 1:])}'
         elif line_strip.startswith("if"):
             indent_add_new = True
             add_pass_line = True
-            answer = self.convert_if(line_strip)
+            answer = f'if {to_python_expression(line_strip[2:].strip())}:'
         elif line_strip.startswith("else"):
             remove_indent = True
             add_pass_line = True
@@ -164,26 +83,20 @@ z=Int(0)
             add_pass_line = True
             indent_add_new = True
             answer = f'while {to_python_expression(line_strip[5:].strip())}:'
-        else:
-            raise Exception("No Case Error")
 
         if remove_indent:
             cp.deep-=1
         if not answer:
             return
-        # 마지막으로 스페이스바 추가
-        final_answer = self.add_space(answer)
+        final_answer = ' '*4*self.deep+answer
         if indent_add_new: # "다음줄"부터 indent 넣을지
             cp.deep+=1
         self.code_str+=final_answer+"\n"
         if add_pass_line:
-            self.code_str+=self.add_space("pass")+"\n"
+            self.code_str+=' '*4*self.deep+"pass\n"
 
-while True:
+while n:= int(input()):
     cp = CodeParser()
-    n = int(input())
-    if n == 0:
-        break
     for _ in range(n):
         cp.parse_next_line(input().strip())
     exec(cp.code_str)
