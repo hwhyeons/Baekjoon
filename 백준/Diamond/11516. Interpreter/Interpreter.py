@@ -49,12 +49,8 @@ class Int(int):
         return Int(int.__rmul__(self.val, o.val))
     def __rfloordiv__(self, o):
         return Int(int.__rfloordiv__(self.val, o.val))
-    def __ceil__(self):
-        return Int(int.__ceil__(self.val))
     def __floor__(self):
         return Int(int.__floor__(self.val))
-    def __round__(self):
-        return Int(int.__round__(self.val))
 for ch in 'abcdefghijklmnopqrstuvwxyz':
     exec(f"{ch}=Int(0)")
 """
