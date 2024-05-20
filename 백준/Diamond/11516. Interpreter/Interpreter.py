@@ -136,14 +136,11 @@ y=Int(0)
 z=Int(0)
 """
 
-
     def convert_print(self, line_strip: str):
         expression_str: str = line_strip[5:].strip()
         return f'print({Expression.to_python_expression(expression_str)})'
 
     def convert_set(self, line_strip: str):
-        # 맨앞 set 제거
-        # set n = expr~
         assert line_strip.startswith("set")
         s1 = line_strip[3:] # n = expr ~
         s2 = s1.strip()
@@ -155,37 +152,20 @@ z=Int(0)
         return final_expression
 
     def convert_if(self, line: str):
-        assert line.startswith("if")
-        #ex) if n % 2 ==0
-
         s1 = line[2:].strip() # "n % 2 == 0"
         expression_without_if = Expression.to_python_expression(s1)
         full_str = f'if {expression_without_if}:'
         return full_str
 
-    def convert_else(self, line: str):
-        assert line.startswith("else")
-        else_str = f'else:'
-        return else_str
-
     def convert_while(self, line: str):
-        assert line.startswith("while")
         s1 = line[5:].strip() # "n % 2 == 0"
         expression_without_while = Expression.to_python_expression(s1)
         full_str = f'while {expression_without_while}:'
         return full_str
 
-    def add_indent(self) -> None:
-        self.deep +=1
-
-    def remove_indent(self) -> None:
-        self.deep -= 1
-        assert self.deep >= 0
-
     def add_space(self,line: str):
         assert line[0] != ' '
         return ' '*4*self.deep+line
-
 
     def parse_next_line(self, line_strip: str) -> None:
         answer = ''
@@ -204,7 +184,7 @@ z=Int(0)
             remove_indent = True
             add_pass_line = True
             indent_add_new = True
-            answer = self.convert_else(line_strip)
+            answer = 'else:'
         elif "end" in line_strip:
             remove_indent = True
         elif line_strip.startswith("while"):
@@ -213,19 +193,16 @@ z=Int(0)
             answer = self.convert_while(line_strip)
         else:
             raise Exception("No Case Error")
-        
 
-        # else는 한번 indent 줄여야함
         if remove_indent:
-            cp.remove_indent()
+            cp.deep-=1
 
-        # end if 같은 없는 라인
         if not answer:
             return
         # 마지막으로 스페이스바 추가
         final_answer = self.add_space(answer)
         if indent_add_new: # "다음줄"부터 indent 넣을지
-            cp.add_indent()
+            cp.deep+=1
         self.code_str+=final_answer+"\n"
         if add_pass_line:
             self.code_str+=self.add_space("pass")+"\n"
