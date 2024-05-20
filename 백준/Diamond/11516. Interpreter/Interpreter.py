@@ -40,7 +40,6 @@ for ch in 'abcdefghijklmnopqrstuvwxyz':
     def parse_next_line(self, ls):
         ans = ''
         new_ind = False
-        r_ind = False
         psline = False
         if ls.startswith("print"):
             ans = f'print({to_python_expression(ls[5:].strip())})'
@@ -51,20 +50,17 @@ for ch in 'abcdefghijklmnopqrstuvwxyz':
             psline = True
             ans = f'if {to_python_expression(ls[2:].strip())}:'
         elif ls.startswith("else"):
-            r_ind = True
+            cp.deep-=1
             psline = True
             new_ind = True
             ans = 'else:'
         elif "end" in ls:
-            r_ind = True
+            cp.deep-=1
+            return
         elif ls.startswith("while"):
             psline = True
             new_ind = True
             ans = f'while {to_python_expression(ls[5:].strip())}:'
-        if r_ind:
-            cp.deep-=1
-        if not ans:
-            return
         final_answer = ' '*4*self.deep+ans
         if new_ind:
             cp.deep+=1
