@@ -16,11 +16,7 @@ class Int(int):
     def __init__(self,value: int):
         self.value = value
     def __invert__(self):
-        if self.value == 0:
-            return Int(1)
-        else:
-            return Int(0)
-
+        return Int(1 if self.value == 0 else 0)
     def __neg__(self):
         return Int(int.__neg__(self.value))
     def __add__(self, other):
@@ -133,25 +129,12 @@ z=Int(0)
         return f'print({to_python_expression(expression_str)})'
 
     def convert_set(self, line_strip: str):
-        s1 = line_strip[3:] # n = expr ~
-        s2 = s1.strip()
-        equal_index = s2.find('=') # 첫번째 할당자
-        left_var_name = s2[:equal_index]
-        right_expression = s2[equal_index+1:]
-        right_expression_cvt = to_python_expression(right_expression)
-        final_expression = f'{left_var_name} = {right_expression_cvt}'
-        return final_expression
+        return f'{line_strip[3:].strip()[:line_strip[3:].strip().find("=")]} = {to_python_expression(line_strip[3:].strip()[line_strip[3:].strip().find("=") + 1:])}'
 
     def convert_if(self, line: str):
         s1 = line[2:].strip() # "n % 2 == 0"
         expression_without_if = to_python_expression(s1)
         full_str = f'if {expression_without_if}:'
-        return full_str
-
-    def convert_while(self, line: str):
-        s1 = line[5:].strip() # "n % 2 == 0"
-        expression_without_while = to_python_expression(s1)
-        full_str = f'while {expression_without_while}:'
         return full_str
 
     def add_space(self,line: str):
@@ -180,7 +163,7 @@ z=Int(0)
         elif line_strip.startswith("while"):
             add_pass_line = True
             indent_add_new = True
-            answer = self.convert_while(line_strip)
+            answer = f'while {to_python_expression(line_strip[5:].strip())}:'
         else:
             raise Exception("No Case Error")
 
