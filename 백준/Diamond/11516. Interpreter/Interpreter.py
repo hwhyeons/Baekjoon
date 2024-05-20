@@ -1,19 +1,12 @@
 import re
-pattern_custom_int = r'\b\d+\b'
-def to_custom_int(match):
-    return f'Int({match.group(0)})'
-
-class Expression:
-
-    @staticmethod
-    def to_python_expression(expression_str) -> str:
-        # 1. 나누기 -> // 로
-        s1 = expression_str.replace("/","//")
-        s2 = s1.replace("&&","&")
-        s3 = s2.replace("||","|")
-        s4 = s3.replace("!","~")
-        s5 = re.sub(pattern_custom_int, to_custom_int, s4)
-        return s5
+to_custom_int = lambda m: f'Int({m.group(0)})'
+def to_python_expression(expression_str) -> str:
+    s1 = expression_str.replace("/","//")
+    s2 = s1.replace("&&","&")
+    s3 = s2.replace("||","|")
+    s4 = s3.replace("!","~")
+    s5 = re.sub(r'\b\d+\b', to_custom_int, s4)
+    return s5
 
 class CodeParser:
     def __init__(self) -> None:
@@ -107,7 +100,6 @@ class Int(int):
     def __index__(self):
         return Int(int.__index__(self.value))
 
-
 a=Int(0)
 b=Int(0)
 c=Int(0)
@@ -138,33 +130,31 @@ z=Int(0)
 
     def convert_print(self, line_strip: str):
         expression_str: str = line_strip[5:].strip()
-        return f'print({Expression.to_python_expression(expression_str)})'
+        return f'print({to_python_expression(expression_str)})'
 
     def convert_set(self, line_strip: str):
-        assert line_strip.startswith("set")
         s1 = line_strip[3:] # n = expr ~
         s2 = s1.strip()
         equal_index = s2.find('=') # 첫번째 할당자
         left_var_name = s2[:equal_index]
         right_expression = s2[equal_index+1:]
-        right_expression_cvt = Expression.to_python_expression(right_expression)
+        right_expression_cvt = to_python_expression(right_expression)
         final_expression = f'{left_var_name} = {right_expression_cvt}'
         return final_expression
 
     def convert_if(self, line: str):
         s1 = line[2:].strip() # "n % 2 == 0"
-        expression_without_if = Expression.to_python_expression(s1)
+        expression_without_if = to_python_expression(s1)
         full_str = f'if {expression_without_if}:'
         return full_str
 
     def convert_while(self, line: str):
         s1 = line[5:].strip() # "n % 2 == 0"
-        expression_without_while = Expression.to_python_expression(s1)
+        expression_without_while = to_python_expression(s1)
         full_str = f'while {expression_without_while}:'
         return full_str
 
     def add_space(self,line: str):
-        assert line[0] != ' '
         return ' '*4*self.deep+line
 
     def parse_next_line(self, line_strip: str) -> None:
@@ -196,7 +186,6 @@ z=Int(0)
 
         if remove_indent:
             cp.deep-=1
-
         if not answer:
             return
         # 마지막으로 스페이스바 추가
@@ -213,6 +202,5 @@ while True:
     if n == 0:
         break
     for _ in range(n):
-        strip_line: str = input().strip()
-        cp.parse_next_line(strip_line)
+        cp.parse_next_line(input().strip())
     exec(cp.code_str)
