@@ -1,6 +1,6 @@
 import re
 to_custom_int = lambda m: f'Int({m.group(0)})'
-def to_python_expression(expression_str) -> str:
+def to_python_expression(expression_str):
     s1 = expression_str.replace("/","//")
     s2 = s1.replace("&&","&")
     s3 = s2.replace("||","|")
@@ -9,14 +9,14 @@ def to_python_expression(expression_str) -> str:
     return s5
 
 class CodeParser:
-    def __init__(self) -> None:
+    def __init__(self):
         self.deep = 0
         self.code_str = """\n
 class Int(int):
     def __init__(self,val: int):
         self.val = val
     def __add__(self, o):
-        return Int(int.__add__(self.val, o.val))
+        return Int(self.val+o.val)
     def __sub__(self, o):
         return Int(int.__sub__(self.val, o.val))
     def __invert__(self):
@@ -49,13 +49,11 @@ class Int(int):
         return Int(int.__rmul__(self.val, o.val))
     def __rfloordiv__(self, o):
         return Int(int.__rfloordiv__(self.val, o.val))
-    def __floor__(self):
-        return Int(int.__floor__(self.val))
 for ch in 'abcdefghijklmnopqrstuvwxyz':
     exec(f"{ch}=Int(0)")
 """
 
-    def parse_next_line(self, ls: str) -> None:
+    def parse_next_line(self, ls):
         ans = ''
         new_ind = False
         r_ind = False
