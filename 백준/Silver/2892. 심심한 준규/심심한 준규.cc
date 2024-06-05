@@ -9,6 +9,7 @@
 #include <map>
 #include <vector>
 #include <stack>
+#include <ranges>
 
 using namespace std;
 
@@ -24,16 +25,11 @@ int main()
     for (size_t i = 0; i < N; i++) {
         int hexEnc;
         cin >> hex >> hexEnc;
-        for (int c : arrChar) {
-            if (c == hexEnc) {
-                goto loop;
-                break;
-            }
+        if (ranges::find(arrChar, hexEnc) != end(arrChar)) {
+            cout << ".";
         }
-        cout << "-";
-        continue;
-    loop:
-        cout << ".";
-        continue;
+        else {
+            cout << "-";
+        }
     }
 }
