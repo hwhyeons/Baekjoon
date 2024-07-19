@@ -63,8 +63,8 @@ for group in all_group:
     for i in range(len(members_list)): # 시작
         for j in range(len(members_list)): # 중간
             for k in range(len(members_list)): # 끝
-                if dist[j][k] > dist[j][i] + dist[i][k]:
-                    dist[j][k] = dist[j][i] + dist[i][k]
+                dist[j][k] = min(dist[j][k],dist[j][i] + dist[i][k])
+
 
 
     best_number = -1
