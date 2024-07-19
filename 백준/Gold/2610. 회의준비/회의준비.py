@@ -1,10 +1,9 @@
-import math
 
 N = int(input())
 M = int(input())
-visited: set[int] =set()
+visited =set()
 
-rel:dict[int,set[int]] = dict()  # a,b간의 관계
+rel = dict()  # a,b간의 관계
 for n in range(1,N+1):
     rel[n] = set()
 
@@ -23,7 +22,7 @@ def union_find(number: int, group_set: set[int]):
         union_find(friend, group_set)
 
 # 그룹화 작업
-all_group: list[set[int]] = []
+all_group = []
 for num in range(1,N+1):
     if num in visited:
         continue
@@ -35,17 +34,15 @@ best = [] # 대표들
 
 # 그룹 안에서 플로이드 와샬 알고리즘
 for group in all_group:
-    # group : set[int]
     # 그룹에 한명밖에 없는경우
     if len(group) == 1:
         best.append(list(group)[0])
         continue
     # 플로이드 워셜
     members_list = list(group)
-    # dist: dict[tuple[int,int],int | float] = dict()
-    dist:list[list] = []
+    dist = []
     for _ in range(len(members_list)):
-        dist.append([math.inf]*len(members_list))
+        dist.append([500000]*len(members_list))
 
     for i in range(len(members_list)):
         for j in range(len(members_list)):
@@ -54,34 +51,31 @@ for group in all_group:
                 continue
             mem_num1 = members_list[i]
             mem_num2 = members_list[j]
-            if mem_num1 == mem_num2:
-                raise Exception("err2")
             if mem_num2 in rel[mem_num1] or mem_num1 in rel[mem_num2]:
                 dist[i][j]=1
                 dist[j][i]=1
 
-    for i in range(len(members_list)): # 시작
-        for j in range(len(members_list)): # 중간
-            for k in range(len(members_list)): # 끝
-                if dist[j][k] > dist[j][i] + dist[i][k]:
-                    dist[j][k] = dist[j][i] + dist[i][k]
+    for i in range(len(members_list)): # 중간
+        for j in range(len(members_list)):
+            for k in range(len(members_list)):
+                if dist[i][k] > dist[i][j] + dist[j][k]:
+                    dist[i][k] = dist[i][j] + dist[j][k]
+
 
 
     best_number = -1
-    best_dist = math.inf
+    best_dist = 500000
     # 최적의 거리 받기
     for idx in range(len(members_list)):
         real_number = members_list[idx]
         max_dist = 0
         for d in dist[idx]:
-            if d > 1000000000 or d == 0:
+            if d >= 500000 or d == 0:
                 continue # 무한대는 제외
             max_dist = max(max_dist,d)
         if max_dist < best_dist:
             best_number = real_number
             best_dist = max_dist
-    if best_number < 0:
-        raise Exception("error")
     best.append(best_number)
 
 
