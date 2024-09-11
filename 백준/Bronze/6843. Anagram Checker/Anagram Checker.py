@@ -1,0 +1,5 @@
+s1=input()
+s2=input()
+s1=s1.replace(' ','')
+s2=s2.replace(' ','')
+print("Is an anagram." if sorted(s1)==sorted(s2) else "Is not an anagram.")
