@@ -1,5 +1,3 @@
-
-
 pl: list = list(map(int, input().split())) # ex) 1 2 3 4
 tmp = [("+",pl[0]),("-",pl[1]),("*",pl[2]),("/",pl[3])]
 abc = sorted(tmp,key= lambda k: k[1],reverse=True)
@@ -10,9 +8,6 @@ oper4 = abc[3][0]
 line = input()
 idx = len(line)-1
 
-def skip_token() -> None:
-    global idx
-    idx-=1
 
 def get_token() -> str | None:
     if idx == -1:
@@ -47,34 +42,36 @@ def number() -> int:
     return int(line[:start_idx+1])
 
 def op1() -> int:
+    global idx
     num1 = number()
     while True:
         tok = get_token()
         if tok == oper1:
-            skip_token()
+            idx-=1
             num2 = number()
             num1 = cal(num1,num2,oper1)
-            # num1 = num2 // num1
         else:
             return num1
 
 def op2() -> int:
+    global idx
     exp1 = op1()
     while True:
         tok = get_token()
         if tok == oper2:
-            skip_token()
+            idx-=1
             exp2 = op1()
             exp1 = cal(exp1,exp2,oper2)
         else:
             return exp1
 
 def op3() -> int:
+    global idx
     exp1 = op2()
     while True:
         tok = get_token()
         if tok == oper3:
-            skip_token()
+            idx-=1
             exp2 = op2()
             # exp1 = exp2 - exp1
             exp1 = cal(exp1,exp2,oper3)
@@ -82,18 +79,17 @@ def op3() -> int:
             return exp1
 
 def op4() -> int:
-    global oper4
+    global oper4,idx
     exp1 = op3()
     while True:
         tok = get_token()
         if not tok:
             return exp1
         if tok == oper4:
-            skip_token()
+            idx-=1
             exp2 = op3()
             exp1 = cal(exp1,exp2,oper4) # exp1 += exp2
         else:
             return exp1
-
 
 print(op4())
