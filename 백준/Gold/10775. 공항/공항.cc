@@ -1,65 +1,79 @@
-#include <bits/stdc++.h>
+#include <iostream>
 #include <ranges>
+#include <vector>
+#include <array>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <set>
+#include <map>
+#include <cmath>
+#include <unordered_set>
+#include <unordered_map>
 
 typedef long long ll;
-
 using namespace std;
 
-class Node{
-public:
-    int idx;
-    Node* parent;
-    Node(int idx){
-        this->idx =idx;
-        this->parent = this;
-    }
-};
+vector<int> parent; // key : 게이트 번호 / value : 부모노드
+vector<bool> used; // 게이트를 썼는지
 
-vector<Node*> v;
-
-
-Node* find(Node* node) {
-    if (node->parent == node) {
-        return node;
-    } else {
-        return node->parent = find(node->parent);
+int findParent(int node) {
+    if (node == parent[node]) return node;
+    else {
+        int p = parent[node];
+        return parent[node] = findParent(p); // 최적화 유니온 파인드
     }
 }
 
-void merge(Node* n1, Node* n2) {
-    Node* p1 = find(n1);
-    Node* p2 = find(n2);
-    if (p1->idx < p2->idx) {
-        p2->parent = p1->parent;
+
+void merge(int n1, int n2) {
+    int p1 = findParent(n1);
+    int p2 = findParent(n2);
+    if (p1 < p2) {
+        parent[p2] = p1;
     } else {
-        p1->parent = p2->parent;
+        parent[p1] = p2;
     }
+}
+
+int findBestAndCheck(int node) {
+    int p = findParent(node);
+    if (!used[p]) {
+        used[p] = true;
+        return p;
+    }
+    // 이미 사용 중인 경우 + 제일 앞 노드
+    if (p == 1) {
+        return 0;
+    }
+    // 새로운 노드와 병합
+    int np = findBestAndCheck(p - 1);
+    if (np == 0) return 0;
+    if (np > p) throw "err";
+    // 병합
+    merge(np, p);
+    return np;
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-    int G,P;
+    int G, P;
     cin >> G >> P;
-    // make node
-    for (int i = 0; i <= G; ++i) {
-        Node* ntmp = new Node(i);
-        v.emplace_back(ntmp);
+    used.assign(G+1, false);
+    for (size_t i = 0; i <= G; i++) {
+        parent.push_back(i); // 처음에는 자기 자신이 부모
     }
 
-    int ans = 0;
-    for (int i = 0; i < P; ++i) {
-        int t;
-        cin >> t;
-        Node* cur = v[t];
-        Node* parent = find(cur);
-        if (parent->idx == 0) { // 0번 노드가 조상 >> 더이상 게이트에 넣을 수 없음
+    int answer = 0;
+    for (size_t i = 0; i < P; i++) {
+        int gi; cin >> gi;
+        int rt = findBestAndCheck(gi);
+        if (rt == 0) {
             break;
         }
-        merge(parent,v[parent->idx-1]); // 현재 노드와 직전 노드 병합
-        ans++;
+        answer++;
+        continue;
     }
-
-    cout << ans;
-    
+    cout << answer;
 }
