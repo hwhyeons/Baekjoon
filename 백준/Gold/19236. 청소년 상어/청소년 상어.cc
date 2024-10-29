@@ -18,28 +18,29 @@ using namespace std;
 
 #define PI 3.141592
 
-//pair<int, int> rotate(int y, int x, int degree) {
-//    double rad = degree * (PI / 180);
-//    double newX = x * cos(rad) - y * sin(rad);
-//    double newY = x * sin(rad) + y * cos(rad);
-//    return { round(newY),round(newX) };
-//}
-
 pair<int, int> rotate(int y, int x) {
-    if (y == 1) {
-        if (x == 1) return { 0,1 };
-        if (x == 0) return { 1,1 };
-        if (x == -1) return { 1, 0 };
-    } else if (y == 0) {
-        if (x == 1) return { -1,1 };
-        if (x == -1) return{ 1,-1 };
-    } else if (y == -1) {
-        if (x == -1) return { 0,-1 };
-        if (x == 0) return { -1,-1 };
-        if (x == 1) return { -1,0 };
-    }
-    throw "err";
+    int degree = -45;
+    double rad = degree * (PI / 180);
+    double newX = x * cos(rad) - y * sin(rad);
+    double newY = x * sin(rad) + y * cos(rad);
+    return { round(newY),round(newX) };
 }
+
+//pair<int, int> rotate(int y, int x) {
+//    if (y == 1) {
+//        if (x == 1) return { 0,1 };
+//        if (x == 0) return { 1,1 };
+//        if (x == -1) return { 1, 0 };
+//    } else if (y == 0) {
+//        if (x == 1) return { -1,1 };
+//        if (x == -1) return{ 1,-1 };
+//    } else if (y == -1) {
+//        if (x == -1) return { 0,-1 };
+//        if (x == 0) return { -1,-1 };
+//        if (x == 1) return { -1,0 };
+//    }
+//    throw "err";
+//}
 
 class Fish {
 public:
