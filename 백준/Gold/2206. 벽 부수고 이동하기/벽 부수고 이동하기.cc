@@ -5,19 +5,24 @@
 #include <algorithm>
 #include <string>
 #include <queue>
+#include <numeric>
 #include <set>
 #include <stack>
 #include <map>
 #include <cmath>
 #include <unordered_set>
 #include <unordered_map>
-
+#include <cassert>
+#include <bitset>
 typedef long long ll;
 using namespace std;
+
+// -----------------------------------------
+// -----------------------------------------
 // -----------------------------------------
 
 
-int N,M;
+int N, M;
 
 int dx[] = { -1,1,0,0 };
 int dy[] = { 0,0,1,-1 };
@@ -35,19 +40,20 @@ int main() {
     cin.tie(nullptr);
     cin >> N >> M;
     vector<vector<int>> v(N, vector<int>(M));
-    vector<vector<vector<bool>>> visit(N, vector<vector<bool>>(M,vector<bool>(2)));
+    vector<vector<vector<bool>>> visit(N, vector<vector<bool>>(M, vector<bool>(2)));
+    int test[50][50][2500];
     //vector<vector<bool>> visit(N, vector<bool>(M));
     for (size_t i = 0; i < N; i++) {
         for (size_t j = 0; j < M; j++) {
             char c; cin >> c;
-            v[i][j] = c=='0' ? 0 : 1;
+            v[i][j] = c == '0' ? 0 : 1;
         }
     }
     int NO_ANSWER = 1000000000;
     queue<Element> q;
     visit[0][0][0] = true;
     //visit[0][0] = true;
-    q.push({0,0,false,1});
+    q.push({ 0,0,false,1 });
     int minAnswer = NO_ANSWER;
     while (!q.empty()) {
         Element top = q.front();
@@ -86,5 +92,5 @@ int main() {
     } else {
         cout << minAnswer;
     }
-    
+
 }
