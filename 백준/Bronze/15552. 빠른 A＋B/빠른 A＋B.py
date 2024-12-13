@@ -1,8 +1,9 @@
-import sys
+# import sys
 # n = int(sys.stdin.readline().strip())
-# for _ in range(n):
-#     a, b = map(int, sys.stdin.readline().split())
-#     sys.stdout.write(str(a + b) + " ")
-
+# gen =[sum(map(int, sys.stdin.readline().split())) for _ in range(n)]
+# print(*gen)
+# vs
+import sys
 n = int(sys.stdin.readline().strip())
-[sys.stdout.write(str(sum(map(int, sys.stdin.readline().strip().split())))+" ") for _ in range(n)]
+gen = (sum(map(int, sys.stdin.readline().split())) for _ in range(n))
+print(*gen)
