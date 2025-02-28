@@ -1,17 +1,31 @@
-select tj2.ID, tj2.FISH_NAME,tj2.LENGTH
-from (select f11.ID, f11.fISH_TYPE, f22.FISH_NAME,f11.LENGTH
-        from FISH_INFO as f11 inner join FISH_NAME_INFO as f22 on f11.FISH_TYPE
-            = f22.FISH_TYPE) as tj2
-where 
-    (tj2.FISH_TYPE,tj2.FISH_NAME,tj2.LENGTH)
-    in
-    (select tj.FISH_TYPE,tj.FISH_NAME, max(LENGTH) as LENGTH
-    from
-        (select f1.ID, f1.fISH_TYPE, f2.FISH_NAME,f1.LENGTH
-        from FISH_INFO as f1 inner join FISH_NAME_INFO as f2 on f1.FISH_TYPE
-            = f2.FISH_TYPE) as tj
-    group by tj.FISH_TYPE, tj.FISH_NAME)
-order by tj2.ID asc
+select f2.ID, f3.FISH_NAME, f3.LENGTH
+from FISH_INFO as f2
+join
+    (select t.FISH_TYPE, f.FISH_NAME,ml as LENGTH
+    from FISH_NAME_INFO as f
+    join
+    (select FISH_TYPE,max(LENGTH) as ml from FISH_INFO group by FISH_TYPE) as t
+    on t.FISH_TYPE = f.FISH_TYPE) as f3
+on f2.LENGTH = f3.LENGTH and f2.FISH_TYPE = f3.FISH_TYPE
+
+
+
+
+# 정답2
+# select tj2.ID, tj2.FISH_NAME,tj2.LENGTH
+# from (select f11.ID, f11.fISH_TYPE, f22.FISH_NAME,f11.LENGTH
+#         from FISH_INFO as f11 inner join FISH_NAME_INFO as f22 on f11.FISH_TYPE
+#             = f22.FISH_TYPE) as tj2
+# where 
+#     (tj2.FISH_TYPE,tj2.FISH_NAME,tj2.LENGTH)
+#     in
+#     (select tj.FISH_TYPE,tj.FISH_NAME, max(LENGTH) as LENGTH
+#     from
+#         (select f1.ID, f1.fISH_TYPE, f2.FISH_NAME,f1.LENGTH
+#         from FISH_INFO as f1 inner join FISH_NAME_INFO as f2 on f1.FISH_TYPE
+#             = f2.FISH_TYPE) as tj
+#     group by tj.FISH_TYPE, tj.FISH_NAME)
+# order by tj2.ID asc
 
 
 
